@@ -1,6 +1,8 @@
 import * as firebase from "firebase";
-import { Observable, Observer, EMPTY } from "rxjs";
+import { Observable, Observer, EMPTY, from } from "rxjs";
+import { map, tap } from "rxjs/operators";
 import { ConfirmationResult } from "@firebase/auth-types";
+import { Group, groupFromSnapshot, groupsFromSnapshot } from "../models/group";
 
 const config = {
   apiKey: "AIzaSyBM1whSloDxnUYPYFfuwwT19goPdI6HAJ4",
@@ -45,3 +47,11 @@ export const getUser = (): Observable<firebase.User | null> =>
   Observable.create((observer: Observer<firebase.User | null>) => {
     firebase.auth().onAuthStateChanged(user => observer.next(user));
   });
+
+export const loadGroups = (userId: string): Observable<Array<Group>> =>
+  from(
+    firebase
+      .firestore()
+      .collection("groups")
+      .get()
+  ).pipe(map(groupsFromSnapshot));
