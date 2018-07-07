@@ -8,7 +8,7 @@ type Props = {
 const MessageCreateFormContainer = ({ handleSubmit }: Props) => (
   <form name="createMessage" onSubmit={handleSubmit}>
     <label>
-      Name:
+      Message:
       <Field name="text" type="text" component="input" />
     </label>
     <button type="submit">Send</button>

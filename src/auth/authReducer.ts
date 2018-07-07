@@ -1,4 +1,4 @@
-import { AppAction, AuthStateReducer, AuthState } from "../types/types";
+import { AuthState, StateReducers, StateReducer } from "../types/types";
 import {
   AUTH_REQUEST_CODE_SUCCESS,
   AUTH_LOGGED_IN,
@@ -6,6 +6,7 @@ import {
   ActionAuthRequestCodeSuccess,
   AUTH_LOGGED_OUT
 } from "./authActions";
+import { createReducer } from "../app/appReducer";
 
 const initialState: AuthState = {
   initialized: false,
@@ -13,13 +14,13 @@ const initialState: AuthState = {
   confirmationResult: undefined
 };
 
-const requestCodeSuccess = (state: AuthState, action: ActionAuthRequestCodeSuccess) => ({
+const requestCodeSuccess: StateReducer<AuthState, ActionAuthRequestCodeSuccess> = (state, action) => ({
   ...state,
   initialized: true,
   confirmationResult: action.payload
 });
 
-const loggedIn = (state: AuthState, action: ActionAuthLoggedIn): AuthState => ({
+const loggedIn: StateReducer<AuthState, ActionAuthLoggedIn> = (state, action) => ({
   ...state,
   initialized: true,
   user: action.payload
@@ -31,11 +32,10 @@ const loggedOut = (state: AuthState) => ({
   user: undefined
 });
 
-const handlers: { [key: string]: AuthStateReducer } = {
+const handlers: StateReducers<AuthState> = {
   [AUTH_REQUEST_CODE_SUCCESS]: requestCodeSuccess,
   [AUTH_LOGGED_IN]: loggedIn,
   [AUTH_LOGGED_OUT]: loggedOut
 };
 
-export const authReducer = (state: AuthState = initialState, action: AppAction) =>
-  handlers[action.type] ? handlers[action.type](state, action) : state;
+export const authReducer = createReducer(handlers, initialState);

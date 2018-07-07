@@ -1,46 +1,34 @@
-import { AppAction, MessagesState, AppActionType, StateReducer } from "../types/types";
+import { set } from "immutadot";
+import { addUnique } from "src/utils/utils";
+import { MessagesState, StateReducers, StateReducer } from "../types/types";
 import {
-  MESSAGES_LOAD_SUCCESS,
-  MessagesLoadSuccess,
   MessageCreateSuccess,
+  MessagesLoadSuccess,
+  MESSAGES_LOAD_SUCCESS,
   MESSAGE_CREATE_SUCCESS
 } from "./messagesActions";
-import { set, push } from "immutadot";
+import { createReducer } from "../app/appReducer";
 
 const initialState: MessagesState = {
   messages: {}
 };
 
-const messagesLoadSuccess = (state: MessagesState, action: MessagesLoadSuccess): MessagesState => ({
+const messagesLoadSuccess: StateReducer<MessagesState, MessagesLoadSuccess> = (state, action) => ({
   ...state,
   messages: set(state.messages, action.payload.groupId, action.payload.messages)
 });
 
-type HasId = {
-  id: string;
-};
+const messageCreateSuccess: StateReducer<MessagesState, MessageCreateSuccess> = (state, action) => ({
+  ...state,
+  messages: {
+    ...state.messages,
+    [action.payload.groupId]: addUnique(state.messages[action.payload.groupId], action.payload.message)
+  }
+});
 
-const addUnique = <T>(items: Array<T & HasId>, item: T & HasId): Array<T> => {
-  console.log(items.some(x => x.id === item.id), items, item);
-  return items.some(x => x.id === item.id) ? items : [...items, item];
-};
-
-const messageCreateSuccess = (state: MessagesState, action: MessageCreateSuccess): MessagesState => {
-  console.log("A", action);
-  console.log(addUnique(state.messages[action.payload.groupId], action.payload.message));
-  return {
-    ...state,
-    messages: {
-      ...state.messages,
-      [action.payload.groupId]: addUnique(state.messages[action.payload.groupId], action.payload.message)
-    }
-  };
-};
-
-const handlers: { [t in AppActionType]?: StateReducer<MessagesState> } = {
+const handlers: StateReducers<MessagesState> = {
   [MESSAGES_LOAD_SUCCESS]: messagesLoadSuccess,
   [MESSAGE_CREATE_SUCCESS]: messageCreateSuccess
 };
 
-export const messagesReducer = (state: MessagesState = initialState, action: AppAction) =>
-  handlers[action.type] ? handlers[action.type](state, action) : state;
+export const messagesReducer = createReducer(handlers, initialState);

@@ -1,32 +1,15 @@
-import {
-  ActionAuthInit,
-  ActionAuthLoggedIn,
-  ActionAuthLoggedOut,
-  ActionAuthRequestCodeSuccess
-} from "../auth/authActions";
-import { User } from "firebase";
 import { ConfirmationResult } from "@firebase/auth-types";
-import { Group } from "../models/group";
-import { GroupsActions, GroupsActionTypes } from "../groups/groupsActions";
+import { User } from "firebase";
+import { AuthActions, AuthActionTypes } from "../auth/authActions";
 import { FcmActions, FcmActionTypes } from "../fcm/fcmActions";
+import { GroupsActions, GroupsActionTypes } from "../groups/groupsActions";
 import { MessagesActions, MessagesActionTypes } from "../messages/messagesActions";
+import { Group } from "../models/group";
 import { Message } from "../models/message";
 
-interface SomeAction {
-  type: string;
-}
+export type AppAction = AuthActions | GroupsActions | MessagesActions | FcmActions;
 
-export type AppAction =
-  | SomeAction
-  | ActionAuthInit
-  | ActionAuthRequestCodeSuccess
-  | ActionAuthLoggedIn
-  | ActionAuthLoggedOut
-  | GroupsActions
-  | MessagesActions
-  | FcmActions;
-
-export type AppActionType = GroupsActionTypes | MessagesActionTypes | FcmActionTypes;
+export type AppActionType = AuthActionTypes | GroupsActionTypes | MessagesActionTypes | FcmActionTypes;
 
 export type AppState = {
   auth: AuthState;
@@ -48,10 +31,8 @@ export type MessagesState = {
   messages: MapObject<Array<Message>>;
 };
 
-export type AuthStateReducer = (state: AuthState, action: AppAction) => AuthState;
+export type StateReducer<S, A> = (state: S, action: A) => S;
 
-export type GroupsStateReducer = (state: GroupsState, action: AppAction) => GroupsState;
-
-export type StateReducer<T> = (state: T, action: AppAction) => T;
+export type StateReducers<T> = { [actionType in AppActionType]?: (state: T, action: AppAction) => T };
 
 export type MapObject<T> = { [key: string]: T };

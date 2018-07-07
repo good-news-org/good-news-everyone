@@ -1,18 +1,18 @@
-import { AppAction, GroupsState, GroupsStateReducer, AppActionType } from "../types/types";
-import { GROUPS_LOAD_SUCCESS, GroupsLoadSuccess } from "./groupsActions";
+import { createReducer } from "../app/appReducer";
+import { GroupsState, StateReducer, StateReducers } from "../types/types";
+import { GroupsLoadSuccess, GROUPS_LOAD_SUCCESS } from "./groupsActions";
 
-const initialState: GroupsState = {  
+const initialState: GroupsState = {
   groups: {}
 };
 
-const groupsLoadSuccess = (state: GroupsState, action: GroupsLoadSuccess) => ({
+const groupsLoadSuccess: StateReducer<GroupsState, GroupsLoadSuccess> = (state, action) => ({
   ...state,
   groups: action.payload
 });
 
-const handlers: { [t in AppActionType]?: GroupsStateReducer } = {
+const handlers: StateReducers<GroupsState> = {
   [GROUPS_LOAD_SUCCESS]: groupsLoadSuccess
 };
 
-export const groupsReducer = (state: GroupsState = initialState, action: AppAction) =>
-  handlers[action.type] ? handlers[action.type](state, action) : state;
+export const groupsReducer = createReducer(handlers, initialState);
