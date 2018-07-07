@@ -1,4 +1,4 @@
-import { ConfirmationResult } from "../../node_modules/@firebase/auth-types";
+import { ConfirmationResult } from "@firebase/auth-types";
 import { User } from "firebase";
 
 export const AUTH_INIT = "AUTH_INIT";

@@ -1,4 +1,4 @@
-import { Action, AppStateReducer, AuthState } from "../types/types";
+import { AppAction, AuthStateReducer, AuthState } from "../types/types";
 import {
   AUTH_REQUEST_CODE_SUCCESS,
   AUTH_LOGGED_IN,
@@ -31,11 +31,11 @@ const loggedOut = (state: AuthState) => ({
   user: undefined
 });
 
-const handlers: { [key: string]: AppStateReducer } = {
+const handlers: { [key: string]: AuthStateReducer } = {
   [AUTH_REQUEST_CODE_SUCCESS]: requestCodeSuccess,
   [AUTH_LOGGED_IN]: loggedIn,
   [AUTH_LOGGED_OUT]: loggedOut
 };
 
-export const authReducer = (state: AuthState = initialState, action: Action) =>
+export const authReducer = (state: AuthState = initialState, action: AppAction) =>
   handlers[action.type] ? handlers[action.type](state, action) : state;

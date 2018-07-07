@@ -8,18 +8,27 @@ import { appReducer } from "./appReducer";
 import { appEpics } from "./appEpics";
 import { Groups } from "../groups/Groups";
 import { Login } from "../login/Login";
-import { Action, AppState } from "../types/types";
+import { AppAction, AppState } from "../types/types";
+import { Router } from "@reach/router";
+import { Group } from "../group/Group";
 
 const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const epicMiddleware = createEpicMiddleware<Action, Action, AppState>();
+const epicMiddleware = createEpicMiddleware<AppAction, AppAction, AppState>();
 const store = createStore(appReducer, composeEnhancers(applyMiddleware(epicMiddleware)));
 epicMiddleware.run(appEpics);
+
+const Content = () => (
+  <Router>
+    <Groups path="/" />
+    <Group path="/group/:id" />
+  </Router>
+);
 
 class App extends React.Component {
   public render() {
     return (
       <Provider store={store}>
-        <AuthProvider>{(user: any) => (user ? <Groups /> : <Login />)}</AuthProvider>
+        <AuthProvider>{(user: any) => (user ? <Content /> : <Login />)}</AuthProvider>
       </Provider>
     );
   }

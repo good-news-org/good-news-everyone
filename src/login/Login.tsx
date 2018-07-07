@@ -3,7 +3,7 @@ import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import { authRequestCode, authLogIn } from "../auth/authActions";
 import { AppState } from "../types/types";
-import { ConfirmationResult } from "../../node_modules/@firebase/auth-types";
+import { ConfirmationResult } from "@firebase/auth-types";
 
 type RequestCodeFormProps = {
   handleSubmit: any;

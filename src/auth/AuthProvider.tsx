@@ -2,7 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { authInit } from "./authActions";
 import { AppState } from "../types/types";
-import { ConfirmationResult } from "../../node_modules/@firebase/auth-types";
+import { ConfirmationResult } from "@firebase/auth-types";
 import { User } from "firebase";
 
 type Props = {

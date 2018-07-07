@@ -9,24 +9,24 @@ import {
   authLoggedIn,
   AUTH_INIT,
   authLoggedOut
-} from "../auth/authActions";
+} from "./authActions";
 import { requestCode, login, getUser } from "../firebase/firebaseService";
-import { AppState, Action } from "../types/types";
+import { AppState, AppAction } from "../types/types";
 
-export const authInitEpic = (action$: Observable<Action>) =>
+export const authInitEpic = (action$: Observable<AppAction>) =>
   action$.pipe(
     ofType(AUTH_INIT),
     mergeMap(() => getUser()),
     map(user => (user ? authLoggedIn(user) : authLoggedOut()))
   );
 
-export const requestCodeEpic = (action$: Observable<Action>) =>
+export const requestCodeEpic = (action$: Observable<AppAction>) =>
   action$.pipe(
     ofType(AUTH_REQUEST_CODE),
     mergeMap((action: ActionAuthLogIn) => requestCode(action.payload).pipe(map(x => authRequestCodeSuccess(x))))
   );
 
-export const loginEpic = (action$: Observable<Action>, state$: StateObservable<AppState>) =>
+export const loginEpic = (action$: Observable<AppAction>, state$: StateObservable<AppState>) =>
   action$.pipe(
     ofType(AUTH_LOG_IN),
     withLatestFrom(state$),
