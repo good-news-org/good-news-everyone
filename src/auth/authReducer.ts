@@ -1,4 +1,4 @@
-import { AuthState, StateReducers, StateReducer } from "../types/types";
+import { AuthState, StateReducers, StateReducer, AppAction } from "../types/types";
 import {
   AUTH_REQUEST_CODE_SUCCESS,
   AUTH_LOGGED_IN,
@@ -6,7 +6,7 @@ import {
   ActionAuthRequestCodeSuccess,
   AUTH_LOGGED_OUT
 } from "./authActions";
-import { createReducer } from "../app/appReducer";
+import { createReducer } from "../utils/utils";
 
 const initialState: AuthState = {
   initialized: false,
@@ -38,4 +38,5 @@ const handlers: StateReducers<AuthState> = {
   [AUTH_LOGGED_OUT]: loggedOut
 };
 
+console.log(createReducer)
 export const authReducer = createReducer(handlers, initialState);

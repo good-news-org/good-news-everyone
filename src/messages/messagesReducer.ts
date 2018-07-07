@@ -1,5 +1,4 @@
 import { set } from "immutadot";
-import { addUnique } from "src/utils/utils";
 import { MessagesState, StateReducers, StateReducer } from "../types/types";
 import {
   MessageCreateSuccess,
@@ -7,7 +6,7 @@ import {
   MESSAGES_LOAD_SUCCESS,
   MESSAGE_CREATE_SUCCESS
 } from "./messagesActions";
-import { createReducer } from "../app/appReducer";
+import { addUnique, createReducer } from "../utils/utils";
 
 const initialState: MessagesState = {
   messages: {}

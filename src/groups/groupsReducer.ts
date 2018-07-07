@@ -1,6 +1,6 @@
-import { createReducer } from "../app/appReducer";
 import { GroupsState, StateReducer, StateReducers } from "../types/types";
 import { GroupsLoadSuccess, GROUPS_LOAD_SUCCESS } from "./groupsActions";
+import { createReducer } from "../utils/utils";
 
 const initialState: GroupsState = {
   groups: {}
