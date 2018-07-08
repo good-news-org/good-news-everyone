@@ -1,0 +1,7 @@
+.messages {
+  height: 100vh;
+}
+
+.list {
+  overflow-y: auto;
+}

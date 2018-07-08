@@ -1,5 +1,7 @@
 import * as React from "react";
 import { Field, reduxForm } from "redux-form";
+import { Button } from "@material-ui/core";
+import { TextField } from 'redux-form-material-ui';
 
 type Props = {
   handleSubmit: any;
@@ -8,10 +10,9 @@ type Props = {
 const MessageCreateFormContainer = ({ handleSubmit }: Props) => (
   <form name="createMessage" onSubmit={handleSubmit}>
     <label>
-      Message:
-      <Field name="text" type="text" component="input" />
+      <Field name="text" component={TextField} label="Type good news..." />      
     </label>
-    <button type="submit">Send</button>
+    <Button type="submit">Send</Button>
   </form>
 );
 

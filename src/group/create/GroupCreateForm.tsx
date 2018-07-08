@@ -1,5 +1,7 @@
+import Button from "@material-ui/core/Button";
 import * as React from "react";
 import { Field, reduxForm } from "redux-form";
+import { TextField } from 'redux-form-material-ui';
 
 type Props = {
   handleSubmit: any;
@@ -8,10 +10,11 @@ type Props = {
 const GroupCreateFormContainer = ({ handleSubmit }: Props) => (
   <form onSubmit={handleSubmit}>
     <label>
-      Name:
-      <Field name="name" type="text" component="input" />
+      <Field name="name" component={TextField} hintText="Group name" />
     </label>
-    <button type="submit">Create group</button>
+    <Button type="submit" variant="contained" color="primary">
+      Create group
+    </Button>
   </form>
 );
 

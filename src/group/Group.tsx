@@ -10,11 +10,7 @@ type Props = {
 
 class GroupContainer extends React.Component<Props> {
   render() {
-    return (
-      <div>
-        <Messages groupId={this.props.id} />
-      </div>
-    );
+    return <Messages groupId={this.props.id} />;
   }
 }
 

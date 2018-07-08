@@ -13,8 +13,8 @@ type Props = {
 };
 
 const renderGroup = (group: Group) => (
-  <Link to={`/group/${group.id}`}>
-    <ListItem key={group.id} button>
+  <Link key={group.id} to={`/group/${group.id}`}>
+    <ListItem button>
       <Avatar>
         <ImageIcon />
       </Avatar>

@@ -18,10 +18,16 @@ const store = createStore(appReducer, composeEnhancers(applyMiddleware(epicMiddl
 epicMiddleware.run(appEpics);
 
 const Content = () => (
-  <Router>
-    <Groups path="/" />
-    <Group path="/group/:id" />
-  </Router>
+  <div className="flex">
+    <div>
+      <Groups />
+    </div>
+    <div className="grow">
+      <Router>
+        <Group path="/group/:id" />
+      </Router>
+    </div>
+  </div>
 );
 
 class App extends React.Component {

@@ -1,10 +1,11 @@
-import * as firebase from "firebase";
-import { Observable, Observer, EMPTY, from } from "rxjs";
-import { map, tap, mergeMap } from "rxjs/operators";
 import { ConfirmationResult } from "@firebase/auth-types";
+import * as firebase from "firebase";
+import { EMPTY, from, Observable, Observer } from "rxjs";
+import { map, mergeMap, skip } from "rxjs/operators";
 import { Group, groupFromSnapshot, groupsFromSnapshot } from "../models/group";
+import { Message, messageFromSnapshot, messagesFromSnapshot } from "../models/message";
 import { MapObject } from "../types/types";
-import { messagesFromSnapshot, Message, messageFromSnapshot } from "../models/message";
+import { userFromSnapshot, User } from "../models/user";
 
 const config = {
   apiKey: "AIzaSyBM1whSloDxnUYPYFfuwwT19goPdI6HAJ4",
@@ -102,12 +103,20 @@ export const loadMessage = (groupId: string, messageId: string): Observable<Mess
       .get()
   ).pipe(map(messageFromSnapshot));
 
-export const createMessage = (groupId: string, text: string): Observable<Message> =>
+export const loadUser = (userId: string): Observable<User> =>
+  from(
+    firebase
+      .firestore()
+      .doc(`users/${userId}`)
+      .get()
+  ).pipe(map(userFromSnapshot));
+
+export const createMessage = (userId: string, groupId: string, text: string): Observable<Message> =>
   from(
     firebase
       .firestore()
       .collection(`groups/${groupId}/messages`)
-      .add({ groupId, text })
+      .add({ groupId, text, authorId: userId })
   ).pipe(mergeMap(ref => loadMessage(groupId, ref.id)));
 
 export const getEventsStream = (userId: string): Observable<object> =>
@@ -118,4 +127,4 @@ export const getEventsStream = (userId: string): Observable<object> =>
       .orderBy("created", "desc")
       .limit(1)
       .onSnapshot(doc => doc.forEach(x => observer.next(x.data())), error => observer.error(error))
-  );
+  ).pipe(skip(1));

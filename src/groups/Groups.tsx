@@ -5,10 +5,10 @@ import { loadGroups } from "./groupsActions";
 import { GroupsList } from "./list/GroupsList";
 import { GroupCreate } from "../group/create/GroupCreate";
 import { Group } from "../models/group";
+import { Button } from "../../node_modules/@material-ui/core";
+import { DialogProvider } from "../components/DialogProvider";
 
-type Props = {
-  path: string;
-};
+type Props = {};
 
 type StateProps = {
   groups: MapObject<Group>;
@@ -26,9 +26,11 @@ class GroupsContainer extends React.Component<AllProps> {
   }
   render() {
     return (
-      <div>
+      <div className="groups">
         <GroupsList groups={this.props.groups} />
-        <GroupCreate />
+        <DialogProvider>
+          {({ isOpen, open, close }) => (isOpen ? <GroupCreate /> : <Button onClick={open}>Create Group</Button>)}
+        </DialogProvider>
       </div>
     );
   }

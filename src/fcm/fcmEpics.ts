@@ -1,30 +1,29 @@
 import { ofType } from "redux-observable";
-import { Observable, of, EMPTY } from "rxjs";
-import { map, mergeMap, catchError, filter, withLatestFrom, mapTo } from "rxjs/operators";
-import { AUTH_INIT, AUTH_LOGGED_IN, ActionAuthLoggedIn } from "../auth/authActions";
+import { EMPTY, Observable, of } from "rxjs";
+import { catchError, filter, map, mergeMap, withLatestFrom } from "rxjs/operators";
+import { ActionAuthLoggedIn, AUTH_LOGGED_IN } from "../auth/authActions";
 import {
-  getToken,
-  requestPermission,
-  updateUserToken,
   getEventsStream,
-  loadMessage
+  getToken,
+  loadMessage,
+  requestPermission,
+  updateUserToken
 } from "../firebase/firebaseService";
+import { createMessageError, createMessageSuccess } from "../messages/messagesActions";
 import { AppAction, AppState } from "../types/types";
 import {
-  getFcmTokenSuccess,
-  getFcmTokenError,
-  requestFcmPermission,
-  FCM_REQUEST_PERMISSION,
-  FCM_GET_TOKEN_SUCCESS,
-  FCM_GET_TOKEN,
-  getFcmToken,
-  FcmGetTokenSuccess,
   fcmEvent,
+  FcmEvent,
+  FcmGetTokenSuccess,
   FCM_EVENT,
-  FcmEvent
+  FCM_GET_TOKEN,
+  FCM_GET_TOKEN_SUCCESS,
+  FCM_REQUEST_PERMISSION,
+  getFcmToken,
+  getFcmTokenError,
+  getFcmTokenSuccess,
+  requestFcmPermission
 } from "./fcmActions";
-import { createMessageSuccess, createMessageError } from "../messages/messagesActions";
-import { MessageCreate } from "../messages/create/MessageCreate";
 
 export const subscribeToEvents = (action$: Observable<AppAction>) =>
   action$.pipe(
@@ -42,7 +41,7 @@ export const handleEvents = (action$: Observable<AppAction>) =>
     ofType<FcmEvent>(FCM_EVENT),
     mergeMap(action => {
       const messageId = action.payload["data"]["message_id"];
-      const groupId = action.payload["data"]["group_id"];      
+      const groupId = action.payload["data"]["group_id"];
       return loadMessage(groupId, messageId).pipe(
         map(x => createMessageSuccess(groupId, x)),
         catchError(x => of(createMessageError(x)))
