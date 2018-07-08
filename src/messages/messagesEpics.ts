@@ -1,7 +1,7 @@
 import { ofType } from "redux-observable";
 import { Observable, of } from "rxjs";
 import { catchError, map, mergeMap } from "rxjs/operators";
-import { loadMessages, createMessage } from "../firebase/firebaseService";
+import { loadMessages, createMessage, getEventsStream } from "../firebase/firebaseService";
 import { AppAction } from "../types/types";
 import {
   loadMessagesError,
@@ -32,6 +32,6 @@ export const createMessageEpic = (action$: Observable<AppAction>) =>
       createMessage(action.payload.groupId, action.payload.text).pipe(
         map(x => createMessageSuccess(action.payload.groupId, x)),
         catchError(x => console.log(x) || of(createMessageError(x)))
-      ) 
+      )
     )
   );

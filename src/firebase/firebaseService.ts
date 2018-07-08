@@ -109,3 +109,13 @@ export const createMessage = (groupId: string, text: string): Observable<Message
       .collection(`groups/${groupId}/messages`)
       .add({ groupId, text })
   ).pipe(mergeMap(ref => loadMessage(groupId, ref.id)));
+
+export const getEventsStream = (userId: string): Observable<object> =>
+  Observable.create((observer: Observer<any>) =>
+    firebase
+      .firestore()
+      .collection(`users/${userId}/events`)
+      .orderBy("created", "desc")
+      .limit(1)
+      .onSnapshot(doc => doc.forEach(x => observer.next(x.data())), error => observer.error(error))
+  );

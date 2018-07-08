@@ -38,5 +38,4 @@ const handlers: StateReducers<AuthState> = {
   [AUTH_LOGGED_OUT]: loggedOut
 };
 
-console.log(createReducer)
 export const authReducer = createReducer(handlers, initialState);
