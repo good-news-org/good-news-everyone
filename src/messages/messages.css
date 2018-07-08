@@ -1,7 +1,8 @@
 .messages {
-  height: 100vh;
+    padding-bottom: 8px;
 }
 
 .list {
   overflow-y: auto;
+  /* padding: 8px 0; */
 }

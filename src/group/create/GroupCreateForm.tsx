@@ -10,7 +10,7 @@ type Props = {
 const GroupCreateFormContainer = ({ handleSubmit }: Props) => (
   <form onSubmit={handleSubmit}>
     <label>
-      <Field name="name" component={TextField} hintText="Group name" />
+      <Field name="name" component={TextField} label="Group name" />
     </label>
     <Button type="submit" variant="contained" color="primary">
       Create group

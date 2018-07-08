@@ -26,9 +26,16 @@ class MessagesContainer extends React.Component<AllProps> {
   componentDidMount() {
     this.props.loadMessages();
   }
+
+  componentWillReceiveProps(nextProps: AllProps) {
+    if (this.props.groupId !== nextProps.groupId) {
+      this.props.loadMessages();
+    }
+  }
+
   render() {
     return (
-      <div className="flex vertical messages">
+      <div className="flex vertical grow messages">
         <div className="grow list">
           {this.props.messages ? this.props.messages.map(x => <MessageComponent key={x.id} message={x} />) : null}
         </div>

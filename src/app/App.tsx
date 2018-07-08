@@ -1,16 +1,21 @@
+import AppBar from "@material-ui/core/AppBar";
+import IconButton from "@material-ui/core/IconButton";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import MenuIcon from "@material-ui/icons/Menu";
+import { Router } from "@reach/router";
 import * as React from "react";
-import "./App.css";
-import { AuthProvider } from "../auth/AuthProvider";
 import { Provider } from "react-redux";
+import { applyMiddleware, compose, createStore } from "redux";
 import { createEpicMiddleware } from "redux-observable";
-import { createStore, applyMiddleware, compose } from "redux";
-import { appReducer } from "./appReducer";
-import { appEpics } from "./appEpics";
+import { AuthProvider } from "../auth/AuthProvider";
+import { Group } from "../group/Group";
 import { Groups } from "../groups/Groups";
 import { Login } from "../login/Login";
 import { AppAction, AppState } from "../types/types";
-import { Router } from "@reach/router";
-import { Group } from "../group/Group";
+import "./App.css";
+import { appEpics } from "./appEpics";
+import { appReducer } from "./appReducer";
 
 const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const epicMiddleware = createEpicMiddleware<AppAction, AppAction, AppState>();
@@ -18,12 +23,22 @@ const store = createStore(appReducer, composeEnhancers(applyMiddleware(epicMiddl
 epicMiddleware.run(appEpics);
 
 const Content = () => (
-  <div className="flex">
-    <div>
-      <Groups />
-    </div>
-    <div className="grow">
-      <Router>
+  <div className="flex vertical grow">
+    <AppBar position="static" color="default">
+      <Toolbar>
+        <IconButton color="inherit" aria-label="Menu">
+          <MenuIcon />
+        </IconButton>
+        <Typography variant="title" color="inherit">
+          Good News, Everyone!
+        </Typography>
+      </Toolbar>
+    </AppBar>
+    <div className="flex grow">
+      <div>
+        <Groups />
+      </div>
+      <Router className="flex grow">
         <Group path="/group/:id" />
       </Router>
     </div>

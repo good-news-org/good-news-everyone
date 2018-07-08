@@ -1,12 +1,12 @@
 import * as React from "react";
-import { AppState, MapObject } from "../types/types";
 import { connect } from "react-redux";
-import { loadGroups } from "./groupsActions";
-import { GroupsList } from "./list/GroupsList";
-import { GroupCreate } from "../group/create/GroupCreate";
-import { Group } from "../models/group";
 import { Button } from "../../node_modules/@material-ui/core";
 import { DialogProvider } from "../components/DialogProvider";
+import { GroupCreate } from "../group/create/GroupCreate";
+import { Group } from "../models/group";
+import { AppState, MapObject } from "../types/types";
+import { loadGroups } from "./groupsActions";
+import { GroupsList } from "./list/GroupsList";
 
 type Props = {};
 
@@ -26,7 +26,7 @@ class GroupsContainer extends React.Component<AllProps> {
   }
   render() {
     return (
-      <div className="groups">
+      <div className="groups">        
         <GroupsList groups={this.props.groups} />
         <DialogProvider>
           {({ isOpen, open, close }) => (isOpen ? <GroupCreate /> : <Button onClick={open}>Create Group</Button>)}
