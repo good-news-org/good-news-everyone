@@ -27,7 +27,7 @@ export type GroupActions = GroupCreate | GroupCreateSuccess | GroupCreateError;
 
 export type GroupActionTypes = TYPE_GROUP_CREATE | TYPE_GROUP_CREATE_SUCCESS | TYPE_GROUP_CREATE_ERROR;
 
-export const createGroup = createAction1<GroupCreate, Group>(GROUP_CREATE);
+export const createGroup = createAction1<GroupCreate, string>(GROUP_CREATE);
 
 export const createGroupSuccess = createAction1<GroupCreateSuccess, Group>(GROUP_CREATE_SUCCESS);
 
