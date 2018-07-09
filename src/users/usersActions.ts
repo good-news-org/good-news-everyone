@@ -26,7 +26,7 @@ export type UsersActions = UserLoad | UsersLoadSuccess | UsersLoadError;
 
 export type UsersActionTypes = TYPE_USER_LOAD | TYPE_USER_LOAD_SUCCESS | TYPE_USER_LOAD_ERROR;
 
-export const loadUser = (userId: string): UserLoad => console.log(userId) || ({
+export const loadUser = (userId: string): UserLoad => ({
   type: USER_LOAD,
   payload: userId
 });

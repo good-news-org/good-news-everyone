@@ -28,7 +28,6 @@ class Component extends React.Component<AllProps> {
   }
 
   render() {
-    console.log("user", this.props.user);
     if (this.props.user) {
       return this.props.children({
         user: this.props.user
@@ -39,7 +38,7 @@ class Component extends React.Component<AllProps> {
   }
 }
 
-const mapStateToProps = (state: AppState, props: Props): StateProps => console.log(state.users[props.userId]) || ({
+const mapStateToProps = (state: AppState, props: Props): StateProps => ({
   user: state.users.users[props.userId]
 });
 

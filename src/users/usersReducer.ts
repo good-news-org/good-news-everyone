@@ -7,7 +7,7 @@ const initialState: UsersState = {
   users: {}
 };
 
-const usersLoadSuccess: StateReducer<UsersState, UsersLoadSuccess> = (state, action) => console.log(action) || ({
+const usersLoadSuccess: StateReducer<UsersState, UsersLoadSuccess> = (state, action) => ({
   users: {
     ...state.users,
     [action.payload.id]: action.payload
