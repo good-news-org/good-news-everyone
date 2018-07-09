@@ -8,12 +8,14 @@ import { Message } from "../models/message";
 import { UsersActions, UsersActionTypes } from "../users/usersActions";
 import { Observable } from "../../node_modules/rxjs";
 import { User } from "../models/user";
+import { GroupActionTypes, GroupActions } from "../group/groupActions";
 
-export type AppAction = AuthActions | GroupsActions | MessagesActions | FcmActions | UsersActions;
+export type AppAction = AuthActions | GroupsActions | GroupActions | MessagesActions | FcmActions | UsersActions;
 
 export type AppActionType =
   | AuthActionTypes
   | GroupsActionTypes
+  | GroupActionTypes
   | MessagesActionTypes
   | FcmActionTypes
   | UsersActionTypes;

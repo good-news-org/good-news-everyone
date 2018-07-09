@@ -10,7 +10,7 @@ import {
   updateUserToken
 } from "../firebase/firebaseService";
 import { createMessageError, createMessageSuccess } from "../messages/messagesActions";
-import { AppAction, AppState } from "../types/types";
+import { AppAction, AppState, AppEpic } from "../types/types";
 import {
   fcmEvent,
   FcmEvent,
@@ -25,7 +25,7 @@ import {
   requestFcmPermission
 } from "./fcmActions";
 
-export const subscribeToEvents = (action$: Observable<AppAction>) =>
+export const subscribeToEvents: AppEpic = action$ =>
   action$.pipe(
     ofType<ActionAuthLoggedIn>(AUTH_LOGGED_IN),
     mergeMap(action =>
@@ -36,7 +36,7 @@ export const subscribeToEvents = (action$: Observable<AppAction>) =>
     )
   );
 
-export const handleEvents = (action$: Observable<AppAction>) =>
+export const handleEvents: AppEpic = action$ =>
   action$.pipe(
     ofType<FcmEvent>(FCM_EVENT),
     mergeMap(action => {
@@ -49,7 +49,7 @@ export const handleEvents = (action$: Observable<AppAction>) =>
     })
   );
 
-export const updateFcmTokenEpic = (action$: Observable<AppAction>, state$: Observable<AppState>) =>
+export const updateFcmTokenEpic: AppEpic = (action$, state$) =>
   action$.pipe(
     ofType<FcmGetTokenSuccess>(FCM_GET_TOKEN_SUCCESS),
     withLatestFrom(state$),
@@ -57,7 +57,7 @@ export const updateFcmTokenEpic = (action$: Observable<AppAction>, state$: Obser
     mergeMap(() => EMPTY)
   );
 
-export const getFcmTokenEpic = (action$: Observable<AppAction>) =>
+export const getFcmTokenEpic: AppEpic = action$ =>
   action$.pipe(
     filter(x => x.type === AUTH_LOGGED_IN || x.type === FCM_GET_TOKEN),
     mergeMap(() =>
@@ -68,7 +68,7 @@ export const getFcmTokenEpic = (action$: Observable<AppAction>) =>
     )
   );
 
-export const requestFcmPermissionEpic = (action$: Observable<AppAction>) =>
+export const requestFcmPermissionEpic: AppEpic = action$ =>
   action$.pipe(
     ofType(FCM_REQUEST_PERMISSION),
     mergeMap(() =>

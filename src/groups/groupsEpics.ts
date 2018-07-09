@@ -1,11 +1,11 @@
 import { ofType } from "redux-observable";
-import { Observable, of } from "rxjs";
-import { map, mergeMap, onErrorResumeNext, catchError } from "rxjs/operators";
+import { of } from "rxjs";
+import { catchError, map, mergeMap } from "rxjs/operators";
 import { loadGroups } from "../firebase/firebaseService";
-import { AppAction } from "../types/types";
+import { AppEpic } from "../types/types";
 import { GROUPS_LOAD, loadGroupsError, loadGroupsSuccess } from "./groupsActions";
 
-export const loadGroupsEpic = (action$: Observable<AppAction>) =>
+export const loadGroupsEpic: AppEpic = action$ =>
   action$.pipe(
     ofType(GROUPS_LOAD),
     mergeMap(() =>
