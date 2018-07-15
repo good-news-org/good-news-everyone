@@ -5,6 +5,7 @@ import { loadGroupsEpic } from "../groups/groupsEpics";
 import { createMessageEpic, loadMessagesEpic } from "../messages/messagesEpics";
 import { AppAction, AppState } from "../types/types";
 import { loadUsersEpic } from "../users/usersEpics";
+import { initRouterEpic, routerPushEpic, routerReplaceEpic, routerPopEpic } from "../router/routerEpics";
 
 export const appEpics = combineEpics<AppAction, AppAction, AppState>(
   authInitEpic,
@@ -17,5 +18,9 @@ export const appEpics = combineEpics<AppAction, AppAction, AppState>(
   requestFcmPermissionEpic,
   subscribeToEvents,
   loadUsersEpic,
-  handleEvents
+  handleEvents,
+  initRouterEpic,
+  routerPushEpic,
+  routerReplaceEpic,
+  routerPopEpic
 );

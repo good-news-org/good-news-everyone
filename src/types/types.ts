@@ -9,8 +9,16 @@ import { UsersActions, UsersActionTypes } from "../users/usersActions";
 import { Observable } from "../../node_modules/rxjs";
 import { User } from "../models/user";
 import { GroupActionTypes, GroupActions } from "../group/groupActions";
+import { RouterActions, RouterActionTypes } from "../router/routerActions";
 
-export type AppAction = AuthActions | GroupsActions | GroupActions | MessagesActions | FcmActions | UsersActions;
+export type AppAction =
+  | AuthActions
+  | GroupsActions
+  | GroupActions
+  | MessagesActions
+  | FcmActions
+  | UsersActions
+  | RouterActions;
 
 export type AppActionType =
   | AuthActionTypes
@@ -18,13 +26,15 @@ export type AppActionType =
   | GroupActionTypes
   | MessagesActionTypes
   | FcmActionTypes
-  | UsersActionTypes;
+  | UsersActionTypes
+  | RouterActionTypes;
 
 export type AppState = {
   auth: AuthState;
   groups: GroupsState;
   messages: MessagesState;
   users: UsersState;
+  router: RouterState;
 };
 
 export type AppEpic = (action$: Observable<AppAction>, state$: Observable<AppState>) => Observable<AppAction>;
@@ -41,6 +51,13 @@ export type GroupsState = {
 
 export type MessagesState = {
   messages: MapObject<Array<Message>>;
+};
+
+export type RouterState = {
+  location: string;
+  params: {
+    [key: string]: any;
+  };
 };
 
 export type UsersState = {

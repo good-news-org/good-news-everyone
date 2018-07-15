@@ -1,20 +1,20 @@
 import { ofType } from "redux-observable";
-import { Observable, of } from "rxjs";
+import { of } from "rxjs";
 import { catchError, map, mergeMap, withLatestFrom } from "rxjs/operators";
-import { loadMessages, createMessage, getEventsStream } from "../firebase/firebaseService";
-import { AppAction, AppState, AppEpic } from "../types/types";
+import { createMessage, loadMessages } from "../firebase/firebaseService";
+import { AppEpic } from "../types/types";
 import {
+  createMessageError,
+  createMessageSuccess,
   loadMessagesError,
   loadMessagesSuccess,
+  MessageCreate,
   MessagesLoad,
   MESSAGES_LOAD,
-  MESSAGE_CREATE,
-  MessageCreate,
-  createMessageSuccess,
-  createMessageError
+  MESSAGE_CREATE
 } from "./messagesActions";
 
-export const loadMessagesEpic: AppEpic = (action$) =>
+export const loadMessagesEpic: AppEpic = action$ =>
   action$.pipe(
     ofType<MessagesLoad>(MESSAGES_LOAD),
     mergeMap(action =>

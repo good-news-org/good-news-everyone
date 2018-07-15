@@ -4,7 +4,6 @@ import { AppState } from "../types/types";
 import { Messages } from "../messages/Messages";
 
 type Props = {
-  path: string; // wtf router shit
   id?: string;
 };
 

@@ -16,7 +16,7 @@ export const createAction = <A extends AppAction>(type: AppActionType) => () => 
 
 export const createAction1 = <A extends AppAction, T>(type: AppActionType) => (payload: T) => ({ type, payload });
 
-export const createAction2 = <A extends AppAction, T, S>(type: AppActionType, a: T, b: S) => () => ({
+export const createAction2 = <A extends AppAction, T, S>(type: AppActionType) => (a: T, b: S) => ({
   type,
   payload: { a, b }
 });

@@ -2,9 +2,9 @@ import Avatar from "@material-ui/core/Avatar";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import { Link } from "@reach/router";
 import * as React from "react";
 import { Group } from "../../models/group";
+import { Link } from "../../router/Link";
 import { MapObject } from "../../types/types";
 
 type Props = {

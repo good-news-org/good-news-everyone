@@ -1,9 +1,9 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { AppState } from "../../types/types";
+import { routerPop } from "../../router/routerActions";
 import { createMessage } from "../messagesActions";
+import { AppState } from "../../types/types";
 import { MessageCreateForm } from "./MessageCreateForm";
-import { render } from "../../../node_modules/@types/react-dom";
 
 type CreateMessage = (groupId: string) => (data: { text: string }) => void;
 

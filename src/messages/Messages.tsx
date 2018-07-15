@@ -27,7 +27,7 @@ class MessagesContainer extends React.Component<AllProps> {
     this.props.loadMessages();
   }
 
-  componentWillReceiveProps(nextProps: AllProps) {
+  componentWillReceiveProps(nextProps: AllProps) {    
     if (this.props.groupId !== nextProps.groupId) {
       this.props.loadMessages();
     }
