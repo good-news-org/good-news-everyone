@@ -1,0 +1,16 @@
+.login {
+  padding: 48px 64px;
+}
+
+.login .title {
+  margin-bottom: 16px;
+}
+
+.login .field {
+  margin-bottom: 0.35em;
+}
+
+.login .button {
+  margin-bottom: 0.35em;
+  margin-top: 0.35em;
+}
