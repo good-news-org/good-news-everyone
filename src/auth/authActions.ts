@@ -90,7 +90,9 @@ export const authLoggedIn = (user: User): ActionAuthLoggedIn => ({
   type: AUTH_LOGGED_IN,
   payload: user
 });
-
+export const authLogout = (): ActionAuthLogOut => ({
+    type: AUTH_LOG_OUT
+});
 export const authLoggedOut = (): ActionAuthLoggedOut => ({
   type: AUTH_LOGGED_OUT
 });

@@ -1,3 +1,6 @@
 body {
   /* width: calc(80% + 20%); */
 }
+.flex-grow {
+    flex-grow: 1;
+}
