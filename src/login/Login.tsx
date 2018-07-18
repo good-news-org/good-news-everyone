@@ -4,6 +4,10 @@ import { connect } from "react-redux";
 import { authRequestCode, authLogIn } from "../auth/authActions";
 import { AppState } from "../types/types";
 import { ConfirmationResult } from "@firebase/auth-types";
+import { Card, Typography, Checkbox, FormControlLabel } from "@material-ui/core";
+import Button from "@material-ui/core/Button";
+import { TextField } from "redux-form-material-ui";
+import "./login.css";
 
 type RequestCodeFormProps = {
   handleSubmit: any;
@@ -11,13 +15,12 @@ type RequestCodeFormProps = {
 
 const RequestCodeFormContainer = ({ handleSubmit }: RequestCodeFormProps) => (
   <form onSubmit={handleSubmit}>
-    <label>
-      Phone:
-      <Field name="phone" type="text" component="input" />
-    </label>
-    <button id="button-login" type="submit">
+    <Field name="phone" type="text" label="Phone" component={TextField} fullWidth />
+    <FormControlLabel control={<Checkbox value="qwe" />} label="Remember me" />
+    <Button fullWidth={true} type="submit" className="button" variant="contained" color="primary">
       Login
-    </button>
+    </Button>
+    <div id="button-login" />
   </form>
 );
 
@@ -31,11 +34,11 @@ type LoginFormProps = {
 
 const LoginFormContainer = ({ handleSubmit }: LoginFormProps) => (
   <form onSubmit={handleSubmit}>
-    <label>
-      Code:
-      <Field name="code" type="text" component="input" />
-    </label>
-    <button type="submit">Login</button>
+    <Field name="code" type="text" label="Code" component={TextField} fullWidth />
+    <FormControlLabel control={<Checkbox value="qwe" />} label="Remember me" />
+    <Button fullWidth={true} type="submit" className="button" variant="contained" color="primary">
+      Login
+    </Button>
   </form>
 );
 
@@ -49,8 +52,17 @@ type LoginProps = {
   login: ({ code }: { code: string }) => void;
 };
 
-const LoginContainer = ({ confirmationResult, requestCode, login }: LoginProps) =>
-  confirmationResult ? <LoginForm onSubmit={login} /> : <RequestCodeForm onSubmit={requestCode} />;
+const LoginContainer = ({ confirmationResult, requestCode, login }: LoginProps) => (
+  <div className="flex grow center">
+    <Card className="login">
+      <Typography variant="title" color="inherit" gutterBottom>
+        Sign in
+      </Typography>
+      {confirmationResult ? <LoginForm onSubmit={login} /> : <RequestCodeForm onSubmit={requestCode} />}
+      <Typography gutterBottom>Error or something</Typography>
+    </Card>
+  </div>
+);
 
 const mapStateToProps = (state: AppState) => ({
   confirmationResult: state.auth.confirmationResult
