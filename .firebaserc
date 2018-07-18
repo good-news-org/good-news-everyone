@@ -1,6 +1,6 @@
 {
   "projects": {
-    "development": "rusty-fox-2",
+    "development": "good-news-d",
     "default": "good-news-prod",
     "staging": "good-news-staging"
   }
