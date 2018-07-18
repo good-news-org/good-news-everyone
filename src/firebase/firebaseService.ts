@@ -57,6 +57,17 @@ export const login = (code: string, confirmationResult?: ConfirmationResult): Ob
           })
           .catch(observer.error);
       });
+export const logout = (): Observable<void> => Observable.create((observer: Observer<void>) => {
+           firebase
+             .auth()
+             .signOut()
+             .then(result => {
+               observer.next(result);
+               observer.complete();
+             })
+             .catch(observer.error);
+         });
+   
 
 export const getUser = (): Observable<firebase.User | null> =>
   Observable.create((observer: Observer<firebase.User | null>) => {
