@@ -1,5 +1,5 @@
 import { combineEpics } from "redux-observable";
-import { authInitEpic, loginEpic, requestCodeEpic } from "../auth/authEpics";
+import {authInitEpic, loginEpic, logoutEpic, requestCodeEpic} from "../auth/authEpics";
 import { handleEvents, requestFcmPermissionEpic, subscribeToEvents, updateFcmTokenEpic } from "../fcm/fcmEpics";
 import { loadGroupsEpic } from "../groups/groupsEpics";
 import { createMessageEpic, loadMessagesEpic } from "../messages/messagesEpics";
@@ -10,6 +10,7 @@ import { initRouterEpic, routerPushEpic, routerReplaceEpic, routerPopEpic } from
 export const appEpics = combineEpics<AppAction, AppAction, AppState>(
   authInitEpic,
   loginEpic,
+  logoutEpic,
   requestCodeEpic,
   loadGroupsEpic,
   loadMessagesEpic,

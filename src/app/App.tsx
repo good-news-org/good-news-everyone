@@ -18,6 +18,7 @@ import { appEpics } from "./appEpics";
 import { appReducer } from "./appReducer";
 import { Route } from "../router/Route";
 
+import {Logout} from "../login/Logout";
 const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const epicMiddleware = createEpicMiddleware<AppAction, AppAction, AppState>();
 const store = createStore(appReducer, composeEnhancers(applyMiddleware(epicMiddleware)));
@@ -30,9 +31,10 @@ const Content = () => (
         <IconButton color="inherit" aria-label="Menu">
           <MenuIcon />
         </IconButton>
-        <Typography variant="title" color="inherit">
+        <Typography variant="title" color="inherit" className="flex-grow">
           Good News, Everyone!
         </Typography>
+          <Logout />
       </Toolbar>
     </AppBar>
     <div className="flex grow">
