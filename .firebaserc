@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "rusty-fox-2"
+    "development": "rusty-fox-2",
+    "default": "good-news-prod",
+    "staging": "good-news-staging"
   }
 }
