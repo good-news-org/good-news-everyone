@@ -15,7 +15,6 @@ install:
 
 script:
 - npm run-script build
-- npm run-script build --prefix ./functions
 - if [ $TRAVIS_BRANCH == "master" ]; then export FIREBASE_DEPLOY_KEY=$FIREBASE_TOKEN; fi
 - if [ $TRAVIS_BRANCH == "staging" ]; then  FIREBASE_DEPLOY_KEY=$FIREBASE_TOKEN_STAGING; fi
 - if [ $TRAVIS_BRANCH == "development" ]; then  FIREBASE_DEPLOY_KEY=$FIREBASE_TOKEN_DEV; fi
