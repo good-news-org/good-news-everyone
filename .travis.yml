@@ -8,6 +8,10 @@ branches:
   - master
   - staging
   - development
+cache:
+  directories:
+  - "node_modules"
+  - "functions/node_modules"
 install:
 - npm install
 - npm install -g firebase-tools
