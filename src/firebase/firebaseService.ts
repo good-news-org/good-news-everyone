@@ -8,12 +8,12 @@ import { MapObject } from "../types/types";
 import { userFromSnapshot, User } from "../models/user";
 
 const config = {
-  apiKey: "AIzaSyBM1whSloDxnUYPYFfuwwT19goPdI6HAJ4",
-  authDomain: "rusty-fox-2.firebaseapp.com",
-  databaseURL: "https://rusty-fox-2.firebaseio.com",
-  projectId: "rusty-fox-2",
-  storageBucket: "rusty-fox-2.appspot.com",
-  messagingSenderId: "848796565435"
+  apiKey: process.env.REACT_APP_apiKey,
+  authDomain: process.env.REACT_APP_authDomain,
+  databaseURL: process.env.REACT_APP_databaseURL,
+  projectId: process.env.REACT_APP_projectId,
+  storageBucket: process.env.REACT_APP_storageBucket,
+  messagingSenderId: process.env.REACT_APP_messagingSenderId
 };
 firebase.initializeApp(config);
 
