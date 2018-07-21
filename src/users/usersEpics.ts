@@ -1,17 +1,17 @@
 import { ofType } from "redux-observable";
-import { of } from "rxjs";
-import { catchError, map, mergeMap } from "rxjs/operators";
+import { of, EMPTY } from "rxjs";
+import { catchError, map, mergeMap, withLatestFrom } from "rxjs/operators";
 import { loadUser } from "../firebase/firebaseService";
 import { AppEpic } from "../types/types";
-import { loadUserError, loadUserSuccess, UserLoad, USER_LOAD } from "./usersActions";
+import { loadUserError, loadUserSuccess, UserLoad, USER_LOAD, USER_LOAD_ERROR } from "./usersActions";
 
-export const loadUsersEpic: AppEpic = action$ =>
+export const loadUsersEpic: AppEpic = (action$, state$) =>
   action$.pipe(
     ofType<UserLoad>(USER_LOAD),
     mergeMap(action =>
       loadUser(action.payload).pipe(
-        map(x => loadUserSuccess(x)),
-        catchError(x => console.log(x) || of(loadUserError(x)))
+        map(x => (x ? loadUserSuccess(x) : loadUserError(action.payload, { message: "NOT FOUND" }))),
+        catchError(x => console.log(x) || of(loadUserError(action.payload, x)))
       )
     )
   );

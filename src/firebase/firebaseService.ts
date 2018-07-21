@@ -4,8 +4,8 @@ import { EMPTY, from, Observable, Observer } from "rxjs";
 import { map, mergeMap, skip } from "rxjs/operators";
 import { Group, groupFromSnapshot, groupsFromSnapshot } from "../models/group";
 import { Message, messageFromSnapshot, messagesFromSnapshot } from "../models/message";
+import { User, userFromSnapshot } from "../models/user";
 import { MapObject } from "../types/types";
-import { userFromSnapshot, User } from "../models/user";
 
 const config = {
   apiKey: process.env.REACT_APP_apiKey,
@@ -24,6 +24,10 @@ messaging.onMessage(function(payload) {
 });
 
 messaging.usePublicVapidKey("BKsP4u_MkPCCmcLkzuGanOKrk5pf5v0FUggEzsBJWRstwVhVBy3MK9na7cOhVvO7LDRWRr4akrCIx5t6qqWsmzM");
+
+const collection = (path: string) => firebase.firestore().collection(path);
+
+const doc = (path: string) => firebase.firestore().doc(path);
 
 export const getToken = () => from(messaging.getToken());
 
@@ -57,17 +61,18 @@ export const login = (code: string, confirmationResult?: ConfirmationResult): Ob
           })
           .catch(observer.error);
       });
-export const logout = (): Observable<void> => Observable.create((observer: Observer<void>) => {
-           firebase
-             .auth()
-             .signOut()
-             .then(result => {
-               observer.next(result);
-               observer.complete();
-             })
-             .catch(observer.error);
-         });
-   
+
+export const logout = (): Observable<void> =>
+  Observable.create((observer: Observer<void>) => {
+    firebase
+      .auth()
+      .signOut()
+      .then(result => {
+        observer.next(result);
+        observer.complete();
+      })
+      .catch(observer.error);
+  });
 
 export const getUser = (): Observable<firebase.User | null> =>
   Observable.create((observer: Observer<firebase.User | null>) => {
@@ -75,66 +80,31 @@ export const getUser = (): Observable<firebase.User | null> =>
   });
 
 export const updateUserToken = (userId: string, token: string): Observable<any> =>
-  from(
-    firebase
-      .firestore()
-      .doc(`users/${userId}`)
-      .update(`notificationTokens.${token}`, true)
-  );
+  from(doc(`users/${userId}`).update(`notificationTokens.${token}`, true));
 
 export const loadGroups = (userId: string): Observable<MapObject<Group>> =>
-  from(
-    firebase
-      .firestore()
-      .collection("groups")
-      .get()
-  ).pipe(map(groupsFromSnapshot));
+  from(collection("groups").get()).pipe(map(groupsFromSnapshot));
 
 export const createGroup = (name: string): Observable<Group> =>
-  from(
-    firebase
-      .firestore()
-      .collection("groups")
-      .add({ name })
-  ).pipe(map(groupFromSnapshot));
+  from(collection("groups").add({ name })).pipe(map(groupFromSnapshot));
 
 export const loadMessages = (groupId: string): Observable<Array<Message>> =>
-  from(
-    firebase
-      .firestore()
-      .collection(`groups/${groupId}/messages`)
-      .get()
-  ).pipe(map(messagesFromSnapshot));
+  from(collection(`groups/${groupId}/messages`).get()).pipe(map(messagesFromSnapshot));
 
 export const loadMessage = (groupId: string, messageId: string): Observable<Message> =>
-  from(
-    firebase
-      .firestore()
-      .doc(`groups/${groupId}/messages/${messageId}`)
-      .get()
-  ).pipe(map(messageFromSnapshot));
+  from(doc(`groups/${groupId}/messages/${messageId}`).get()).pipe(map(messageFromSnapshot));
 
 export const loadUser = (userId: string): Observable<User> =>
-  from(
-    firebase
-      .firestore()
-      .doc(`users/${userId}`)
-      .get()
-  ).pipe(map(userFromSnapshot));
+  from(doc(`users/${userId}`).get()).pipe(map(userFromSnapshot));
 
 export const createMessage = (userId: string, groupId: string, text: string): Observable<Message> =>
-  from(
-    firebase
-      .firestore()
-      .collection(`groups/${groupId}/messages`)
-      .add({ groupId, text, authorId: userId })
-  ).pipe(mergeMap(ref => loadMessage(groupId, ref.id)));
+  from(collection(`groups/${groupId}/messages`).add({ groupId, text, authorId: userId })).pipe(
+    mergeMap(ref => loadMessage(groupId, ref.id))
+  );
 
 export const getEventsStream = (userId: string): Observable<object> =>
   Observable.create((observer: Observer<any>) =>
-    firebase
-      .firestore()
-      .collection(`users/${userId}/events`)
+    collection(`users/${userId}/events`)
       .orderBy("created", "desc")
       .limit(1)
       .onSnapshot(doc => doc.forEach(x => observer.next(x.data())), error => observer.error(error))

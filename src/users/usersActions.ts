@@ -8,8 +8,9 @@ export const USER_LOAD_ERROR = "USER_LOAD_ERROR";
 
 export type UserLoad = AppActionP<typeof USER_LOAD, string>;
 export type UsersLoadSuccess = AppActionP<typeof USER_LOAD_SUCCESS, User>;
-export type UsersLoadError = AppActionP<typeof USER_LOAD_ERROR, any>;
+export type UsersLoadError = AppActionP<typeof USER_LOAD_ERROR, { userId: string; error: object }>;
 
 export const loadUser = (userId: string): UserLoad => createAction1(USER_LOAD, userId);
 export const loadUserSuccess = (user: User): UsersLoadSuccess => createAction1(USER_LOAD_SUCCESS, user);
-export const loadUserError = (error: any): UsersLoadError => createAction1(USER_LOAD_ERROR, error);
+export const loadUserError = (userId: string, error: object): UsersLoadError =>
+  createAction1(USER_LOAD_ERROR, { userId, error });
