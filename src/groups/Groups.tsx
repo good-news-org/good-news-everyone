@@ -7,6 +7,7 @@ import { Group } from "../models/group";
 import { AppState, MapObject } from "../types/types";
 import { loadGroups } from "./groupsActions";
 import { GroupsList } from "./list/GroupsList";
+import { Link } from "../router/Link";
 
 type Props = {};
 
@@ -26,11 +27,11 @@ class GroupsContainer extends React.Component<AllProps> {
   }
   render() {
     return (
-      <div className="groups">        
+      <div className="groups">
         <GroupsList groups={this.props.groups} />
-        <DialogProvider>
-          {({ isOpen, open, close }) => (isOpen ? <GroupCreate /> : <Button onClick={open}>Create Group</Button>)}
-        </DialogProvider>
+        <Link to="/create">
+          <Button>Create Group</Button>
+        </Link>
       </div>
     );
   }

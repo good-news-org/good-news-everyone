@@ -1,38 +1,40 @@
-import { RouterState, StateReducer, StateReducers } from "../types/types";
+import { SearchState, StateReducer, StateReducers } from "../types/types";
 import { createReducer } from "../utils/utils";
 import {
-  RouterNavigate,
-  RouterPush,
-  RouterReplace,
-  ROUTER_NAVIGATE,
-  ROUTER_PUSH,
-  ROUTER_REPLACE
+  SearchUserSuccess,
+  SEARCH_USER_SUCCESS,
+  SearchUser,
+  SearchUserError,
+  SEARCH_USER,
+  SEARCH_USER_ERROR
 } from "./searchActions";
 
-const initialState: RouterState = {
-  location: "/",
-  params: {}
+const initialState: SearchState = {
+  query: "/",
+  searching: false,
+  results: []
 };
 
-const routerPush: StateReducer<RouterState, RouterPush> = (state, action) => ({
+const searchUser: StateReducer<SearchState, SearchUserSuccess> = (state, action) => ({
   ...state,
-  location: action.payload
+  searching: true
 });
 
-const routerNavigate: StateReducer<RouterState, RouterNavigate> = (state, action) => ({
+const searchUserSuccess: StateReducer<SearchState, SearchUserSuccess> = (state, action) => ({
   ...state,
-  location: action.payload
+  results: action.payload,
+  searching: false
 });
 
-const routerReplace: StateReducer<RouterState, RouterReplace> = (state, action) => ({
+const searchUserError: StateReducer<SearchState, SearchUserError> = (state, action) => ({
   ...state,
-  location: action.payload
+  searching: false
 });
 
-const handlers: StateReducers<RouterState> = {
-  [ROUTER_PUSH]: routerPush,
-  [ROUTER_NAVIGATE]: routerNavigate,
-  [ROUTER_REPLACE]: routerReplace
+const handlers: StateReducers<SearchState> = {
+  [SEARCH_USER]: searchUser,
+  [SEARCH_USER_SUCCESS]: searchUserSuccess,
+  [SEARCH_USER_ERROR]: searchUserError
 };
 
-export const routerReducer = createReducer(handlers, initialState);
+export const searchReducer = createReducer(handlers, initialState);

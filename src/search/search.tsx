@@ -1,31 +1,24 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { AppState } from "../types/types";
-import { routerPush } from "./searchActions";
 import { TextField } from "@material-ui/core";
-
-type Props = {
-  children?: JSX.Element;
-  to: string;
-};
+import { searchUser } from "./searchActions";
 
 type DispatchProps = {
-  navigate: (href: string) => void;
+  search: (href: string) => void;
 };
 
-type AllProps = Props & DispatchProps;
+type AllProps = DispatchProps;
 
-const SearchComponent = ({ to, navigate, children }: AllProps) => (
-  <TextField onChange={} type="text" />
-);
+const SearchComponent = ({ search }: AllProps) => <TextField onChange={e => search(e.target.value)} type="text" />;
 
 const mapStateToProps = (state: AppState): {} => ({});
 
 const mapDispatchToProps = (dispatch: any): DispatchProps => ({
-  search: e => dispatch(searchUser(e.value))
+  search: query => dispatch(searchUser(query))
 });
 
-export const Search = connect<{}, DispatchProps, Props>(
+export const Search = connect<{}, DispatchProps>(
   mapStateToProps,
   mapDispatchToProps
 )(SearchComponent);

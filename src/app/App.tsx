@@ -17,6 +17,8 @@ import "./App.css";
 import { appEpics } from "./appEpics";
 import { appReducer } from "./appReducer";
 import { Route } from "../router/Route";
+import { GroupCreate } from "../group/create/GroupCreate";
+import { GroupInvite } from "../group/invite/GroupInvite";
 
 const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const epicMiddleware = createEpicMiddleware<AppAction, AppAction, AppState>();
@@ -39,13 +41,11 @@ const Content = () => (
       <div>
         <Groups />
       </div>
-      <Route path="/group/:id">
-        {({ params, route, uri }) => (
-          <div className="flex grow">
-            <Group id={params.id} />
-          </div>
-        )}
-      </Route>
+      <div className="flex grow">
+        <Route path="/group/:id">{({ params }) => <Group groupId={params.id} />}</Route>
+        <Route path="/create">{() => <GroupCreate />}</Route>
+        <Route path="/invite/:id">{({ params }) => <GroupInvite groupId={params.id} />}</Route>
+      </div>
     </div>
   </div>
 );

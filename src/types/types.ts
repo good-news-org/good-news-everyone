@@ -10,6 +10,7 @@ import { Observable } from "../../node_modules/rxjs";
 import { User } from "../models/user";
 import { GroupActionTypes, GroupActions } from "../group/groupActions";
 import { RouterActions, RouterActionTypes } from "../router/routerActions";
+import { SearchActionTypes, SearchActions } from "../search/searchActions";
 
 export type AppAction =
   | AuthActions
@@ -18,7 +19,8 @@ export type AppAction =
   | MessagesActions
   | FcmActions
   | UsersActions
-  | RouterActions;
+  | RouterActions
+  | SearchActions;
 
 export type AppActionType =
   | AuthActionTypes
@@ -27,7 +29,8 @@ export type AppActionType =
   | MessagesActionTypes
   | FcmActionTypes
   | UsersActionTypes
-  | RouterActionTypes;
+  | RouterActionTypes
+  | SearchActionTypes;
 
 export type AppState = {
   auth: AuthState;
@@ -35,6 +38,7 @@ export type AppState = {
   messages: MessagesState;
   users: UsersState;
   router: RouterState;
+  search: SearchState;
 };
 
 export type AppEpic = (action$: Observable<AppAction>, state$: Observable<AppState>) => Observable<AppAction>;
@@ -58,6 +62,12 @@ export type RouterState = {
   params: {
     [key: string]: any;
   };
+};
+
+export type SearchState = {
+  query: string;
+  searching: boolean;
+  results: Array<User>;
 };
 
 export type UsersState = {

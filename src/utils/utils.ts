@@ -20,3 +20,5 @@ export const createAction2 = <A extends AppAction, T, S>(type: AppActionType) =>
   type,
   payload: { a, b }
 });
+
+export const getColor = (id: string) => Math.random() * 360;
