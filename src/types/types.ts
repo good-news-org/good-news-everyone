@@ -3,6 +3,7 @@ import { Observable } from "../../node_modules/rxjs";
 import { Group } from "../models/group";
 import { Message } from "../models/message";
 import { User } from "../models/user";
+import { Loadable } from "./loadable";
 
 export interface AppAction<T extends string> {
   type: T;
@@ -44,7 +45,7 @@ export type RouterState = {
 };
 
 export type UsersState = {
-  users: MapObject<User>;
+  users: MapObject<Loadable<User>>;
 };
 
 export type StateReducer<S, A> = (state: S, action: A) => S;
