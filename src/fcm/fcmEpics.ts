@@ -1,5 +1,5 @@
 import { ofType } from "redux-observable";
-import { EMPTY, Observable, of } from "rxjs";
+import { EMPTY, of } from "rxjs";
 import { catchError, filter, map, mergeMap, withLatestFrom } from "rxjs/operators";
 import { ActionAuthLoggedIn, AUTH_LOGGED_IN } from "../auth/authActions";
 import {
@@ -10,7 +10,7 @@ import {
   updateUserToken
 } from "../firebase/firebaseService";
 import { createMessageError, createMessageSuccess } from "../messages/messagesActions";
-import { AppAction, AppState, AppEpic } from "../types/types";
+import { AppEpic } from "../types/types";
 import {
   fcmEvent,
   FcmEvent,
@@ -63,7 +63,7 @@ export const getFcmTokenEpic: AppEpic = action$ =>
     mergeMap(() =>
       getToken().pipe(
         map(token => (token ? getFcmTokenSuccess(token) : requestFcmPermission())),
-        catchError(x => of(getFcmTokenError()))
+        catchError(x => of(getFcmTokenError(x)))
       )
     )
   );
@@ -74,7 +74,7 @@ export const requestFcmPermissionEpic: AppEpic = action$ =>
     mergeMap(() =>
       requestPermission().pipe(
         map(getFcmToken),
-        catchError(x => of(getFcmTokenError()))
+        catchError(x => of(getFcmTokenError(x)))
       )
     )
   );

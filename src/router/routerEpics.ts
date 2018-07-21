@@ -10,8 +10,8 @@ import {
   ROUTER_PUSH,
   ROUTER_REPLACE,
   ROUTER_POP,
-  RouterReplace,
-  RouterPop
+  RouterPop,
+  RouterReplace
 } from "./routerActions";
 
 const getHistoryObserver = (): Observable<string> =>

@@ -27,6 +27,7 @@
     "webpack",
     "jest",
     "src/setupTests.ts",
+    "functions",
     "public/firebase-messaging-sw.js"
   ]
 }

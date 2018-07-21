@@ -1,7 +1,6 @@
-import { set } from "immutadot";
-import { UsersState, StateReducers, StateReducer } from "../types/types";
-import { UsersLoadSuccess, USERS_LOAD_SUCCESS } from "./usersActions";
+import { StateReducer, StateReducers, UsersState } from "../types/types";
 import { createReducer } from "../utils/utils";
+import { UsersLoadSuccess, USER_LOAD_SUCCESS } from "./usersActions";
 
 const initialState: UsersState = {
   users: {}
@@ -15,7 +14,7 @@ const usersLoadSuccess: StateReducer<UsersState, UsersLoadSuccess> = (state, act
 });
 
 const handlers: StateReducers<UsersState> = {
-  [USERS_LOAD_SUCCESS]: usersLoadSuccess
+  [USER_LOAD_SUCCESS]: usersLoadSuccess
 };
 
 export const usersReducer = createReducer(handlers, initialState);

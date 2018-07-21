@@ -1,33 +1,16 @@
 import { ConfirmationResult } from "@firebase/auth-types";
-import { AuthActions, AuthActionTypes } from "../auth/authActions";
-import { FcmActions, FcmActionTypes } from "../fcm/fcmActions";
-import { GroupsActions, GroupsActionTypes } from "../groups/groupsActions";
-import { MessagesActions, MessagesActionTypes } from "../messages/messagesActions";
+import { Observable } from "../../node_modules/rxjs";
 import { Group } from "../models/group";
 import { Message } from "../models/message";
-import { UsersActions, UsersActionTypes } from "../users/usersActions";
-import { Observable } from "../../node_modules/rxjs";
 import { User } from "../models/user";
-import { GroupActionTypes, GroupActions } from "../group/groupActions";
-import { RouterActions, RouterActionTypes } from "../router/routerActions";
 
-export type AppAction =
-  | AuthActions
-  | GroupsActions
-  | GroupActions
-  | MessagesActions
-  | FcmActions
-  | UsersActions
-  | RouterActions;
+export interface AppAction<T extends string> {
+  type: T;
+}
 
-export type AppActionType =
-  | AuthActionTypes
-  | GroupsActionTypes
-  | GroupActionTypes
-  | MessagesActionTypes
-  | FcmActionTypes
-  | UsersActionTypes
-  | RouterActionTypes;
+export interface AppActionP<T extends string, P> extends AppAction<T> {
+  payload: P;
+}
 
 export type AppState = {
   auth: AuthState;
@@ -37,7 +20,7 @@ export type AppState = {
   router: RouterState;
 };
 
-export type AppEpic = (action$: Observable<AppAction>, state$: Observable<AppState>) => Observable<AppAction>;
+export type AppEpic = (action$: Observable<AppAction<any>>, state$: Observable<AppState>) => Observable<AppAction<any>>;
 
 export type AuthState = {
   initialized: boolean;
@@ -66,6 +49,6 @@ export type UsersState = {
 
 export type StateReducer<S, A> = (state: S, action: A) => S;
 
-export type StateReducers<T> = { [actionType in AppActionType]?: (state: T, action: AppAction) => T };
+export type StateReducers<T> = { [actionType: string]: (state: T, action: AppAction<any>) => T };
 
 export type MapObject<T> = { [key: string]: T };
