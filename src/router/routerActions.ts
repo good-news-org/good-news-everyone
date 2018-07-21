@@ -50,9 +50,10 @@ export const routerPush = createAction1<RouterPush, string>(ROUTER_PUSH);
 
 export const routerPop = createAction<RouterPop>(ROUTER_POP);
 
-export const routerReplace = createAction1<RouterReplace, any>(ROUTER_REPLACE);
-
-// export const routerNavigate =  createAction1<RouterNavigate, string>(ROUTER_NAVIGATE);
+export const routerReplace = (path: string): RouterReplace => ({
+  type: ROUTER_REPLACE,
+  payload: path
+});
 
 export const routerNavigate = (path: string): RouterNavigate => ({
   type: ROUTER_NAVIGATE,
