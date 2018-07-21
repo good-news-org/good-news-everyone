@@ -11,7 +11,7 @@ export const loadUsersEpic: AppEpic = action$ =>
     mergeMap(action =>
       loadUser(action.payload).pipe(
         map(x => loadUserSuccess(x)),
-        catchError(x => of(loadUserError()))
+        catchError(x => console.log(x) || of(loadUserError(x)))
       )
     )
   );

@@ -11,7 +11,7 @@ export const loadGroupsEpic: AppEpic = action$ =>
     mergeMap(() =>
       loadGroups("asd").pipe(
         map(loadGroupsSuccess),
-        catchError(x => of(loadGroupsError()))
+        catchError(x => of(loadGroupsError(x)))
       )
     )
   );

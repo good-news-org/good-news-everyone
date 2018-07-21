@@ -7,7 +7,7 @@ import { AppAction, AppState } from "../types/types";
 import { loadUsersEpic } from "../users/usersEpics";
 import { initRouterEpic, routerPushEpic, routerReplaceEpic, routerPopEpic } from "../router/routerEpics";
 
-export const appEpics = combineEpics<AppAction, AppAction, AppState>(
+export const appEpics = combineEpics<AppAction<any>, AppAction<any>, AppState>(
   authInitEpic,
   loginEpic,
   logoutEpic,

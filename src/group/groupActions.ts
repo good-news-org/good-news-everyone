@@ -1,34 +1,15 @@
 import { Group } from "../models/group";
-import { createAction, createAction1 } from "../utils/utils";
+import { AppActionP } from "../types/types";
+import { createAction1 } from "../utils/utils";
 
 export const GROUP_CREATE = "GROUP_CREATE";
 export const GROUP_CREATE_SUCCESS = "GROUP_CREATE_SUCCESS";
 export const GROUP_CREATE_ERROR = "GROUP_CREATE_ERROR";
 
-export type TYPE_GROUP_CREATE = "GROUP_CREATE";
-export type TYPE_GROUP_CREATE_SUCCESS = "GROUP_CREATE_SUCCESS";
-export type TYPE_GROUP_CREATE_ERROR = "GROUP_CREATE_ERROR";
+export type GroupCreate = AppActionP<typeof GROUP_CREATE, string>;
+export type GroupCreateSuccess = AppActionP<typeof GROUP_CREATE_SUCCESS, Group>;
+export type GroupCreateError = AppActionP<typeof GROUP_CREATE_ERROR, any>;
 
-export type GroupCreate = {
-  type: TYPE_GROUP_CREATE;
-  payload: string;
-};
-
-export type GroupCreateSuccess = {
-  type: TYPE_GROUP_CREATE_SUCCESS;
-  payload: Group;
-};
-
-export type GroupCreateError = {
-  type: TYPE_GROUP_CREATE_ERROR;
-};
-
-export type GroupActions = GroupCreate | GroupCreateSuccess | GroupCreateError;
-
-export type GroupActionTypes = TYPE_GROUP_CREATE | TYPE_GROUP_CREATE_SUCCESS | TYPE_GROUP_CREATE_ERROR;
-
-export const createGroup = createAction1<GroupCreate, string>(GROUP_CREATE);
-
-export const createGroupSuccess = createAction1<GroupCreateSuccess, Group>(GROUP_CREATE_SUCCESS);
-
-export const createGroupError = createAction<GroupCreateError>(GROUP_CREATE_ERROR);
+export const createGroup = (name: string): GroupCreate => createAction1(GROUP_CREATE, name);
+export const createGroupSuccess = (group: Group): GroupCreateSuccess => createAction1(GROUP_CREATE_SUCCESS, group);
+export const createGroupError = (error: any): GroupCreateError => createAction1(GROUP_CREATE_ERROR, error);
