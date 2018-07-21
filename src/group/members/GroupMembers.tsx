@@ -12,7 +12,7 @@ export const GroupMembers = ({ members }: Props) => (
   <div>
     {Object.keys(members).map(key => (
       <UserProvider key={key} userId={members[key].userId}>
-        {({ user }) => (
+        {user => (
           <div>
             <Chip avatar={<Avatar src={user.photoUrl} />} label={user.displayName + " " + user.phone} />
           </div>

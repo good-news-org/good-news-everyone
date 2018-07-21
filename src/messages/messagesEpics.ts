@@ -20,7 +20,7 @@ export const loadMessagesEpic: AppEpic = action$ =>
     mergeMap(action =>
       loadMessages(action.payload).pipe(
         map(x => loadMessagesSuccess(action.payload, x)),
-        catchError(x => of(loadMessagesError()))
+        catchError(x => of(loadMessagesError(x)))
       )
     )
   );

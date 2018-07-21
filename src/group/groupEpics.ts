@@ -25,7 +25,7 @@ export const createGroupEpic: AppEpic = action$ =>
     mergeMap(action =>
       createGroup(action.payload).pipe(
         mergeMap(group => of(createGroupSuccess(group), routerReplace(`invite/${group.id}`))),
-        catchError(x => console.log(x) || of(createGroupError()))
+        catchError(x => console.log(x) || of(createGroupError(x)))
       )
     )
   );

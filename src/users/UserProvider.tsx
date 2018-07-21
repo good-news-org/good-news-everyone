@@ -4,14 +4,16 @@ import { User } from "../models/user";
 import { AppState } from "../types/types";
 import { loadUser } from "./usersActions";
 import { CircularProgress } from "@material-ui/core";
+import { Loadable, IDLE } from "../types/loadable";
+import { or } from "../utils/utils";
 
 type Props = {
   userId: string;
-  children: ({ user }: { user: User }) => JSX.Element;
+  children: (user: User) => JSX.Element;
 };
 
 type StateProps = {
-  user?: User;
+  user: Loadable<User>;
 };
 
 type DispatchProps = {
@@ -22,24 +24,27 @@ type AllProps = Props & StateProps & DispatchProps;
 
 class Component extends React.Component<AllProps> {
   componentDidMount() {
-    if (!this.props.user) {
+    if (this.props.user.state === "IDLE") {
       this.props.loadUser(this.props.userId);
     }
   }
 
   render() {
-    if (this.props.user) {
-      return this.props.children({
-        user: this.props.user
-      });
-    } else {
-      return <CircularProgress />;
+    switch (this.props.user.state) {
+      case "LOADING":
+        return <CircularProgress />;
+      case "SUCCESS":
+        return this.props.children(this.props.user.result);
+      case "ERROR":
+        return <div>UPS :(</div>;
+      case "IDLE":
+        return null;
     }
   }
 }
 
 const mapStateToProps = (state: AppState, props: Props): StateProps => ({
-  user: state.users.users[props.userId]
+  user: or(state.users.users[props.userId], IDLE)
 });
 
 const mapDispatchToProps = (dispatch: any): DispatchProps => ({
