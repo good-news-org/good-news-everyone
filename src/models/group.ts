@@ -1,4 +1,6 @@
 import { MapObject } from "../types/types";
+import { GroupMember } from "./groupMember";
+import { or } from "../utils/utils";
 
 export type Group = {
   id: string;
@@ -6,6 +8,7 @@ export type Group = {
   created: string;
   updated: string;
   deleted: boolean;
+  members: MapObject<GroupMember>;
 };
 
 export const groupFromSnapshot = (snapshot: firebase.firestore.DocumentSnapshot): Group => ({
@@ -13,7 +16,8 @@ export const groupFromSnapshot = (snapshot: firebase.firestore.DocumentSnapshot)
   name: snapshot.get("name"),
   created: snapshot.get("created"),
   updated: snapshot.get("updated"),
-  deleted: snapshot.get("deleted")
+  deleted: snapshot.get("deleted"),
+  members: or(snapshot.get("members"), {})
 });
 
 export const groupsFromSnapshot = (snapshot: firebase.firestore.QuerySnapshot): MapObject<Group> =>

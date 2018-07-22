@@ -4,7 +4,7 @@ import { EMPTY, from, Observable, Observer } from "rxjs";
 import { map, mergeMap, skip } from "rxjs/operators";
 import { Group, groupFromSnapshot, groupsFromSnapshot } from "../models/group";
 import { Message, messageFromSnapshot, messagesFromSnapshot } from "../models/message";
-import { User, userFromSnapshot } from "../models/user";
+import { User, userFromSnapshot, usersFromSnapshot } from "../models/user";
 import { MapObject } from "../types/types";
 
 const config = {
@@ -16,6 +16,8 @@ const config = {
   messagingSenderId: process.env.REACT_APP_messagingSenderId
 };
 firebase.initializeApp(config);
+
+firebase.firestore().settings({ timestampsInSnapshots: true });
 
 const messaging = firebase.messaging();
 
@@ -83,13 +85,32 @@ export const updateUserToken = (userId: string, token: string): Observable<any> 
   from(doc(`users/${userId}`).update(`notificationTokens.${token}`, true));
 
 export const loadGroups = (userId: string): Observable<MapObject<Group>> =>
-  from(collection("groups").get()).pipe(map(groupsFromSnapshot));
+  from(
+    collection("groups")
+      .where(`members.${userId}.active`, "==", true)
+      .get()
+  ).pipe(map(groupsFromSnapshot));
 
-export const createGroup = (name: string): Observable<Group> =>
-  from(collection("groups").add({ name })).pipe(map(groupFromSnapshot));
+export const loadGroup = (groupId: string): Observable<Group> =>
+  from(doc(`groups/${groupId}`).get()).pipe(map(groupFromSnapshot));
+
+export const createGroup = (userId: string, name: string): Observable<Group> =>
+  from(collection("groups").add({ name, members: { [userId]: { userId, active: true } } })).pipe(
+    mergeMap(ref => loadGroup(ref.id))
+  );
+
+export const addMember = (groupId: string, userId: string): Observable<any> =>
+  from(doc(`groups/${groupId}`).update({ members: { [userId]: { userId, active: true } } }));
 
 export const loadMessages = (groupId: string): Observable<Array<Message>> =>
   from(collection(`groups/${groupId}/messages`).get()).pipe(map(messagesFromSnapshot));
+
+export const searchUser = (query: string): Observable<Array<User>> =>
+  from(
+    collection(`users`)
+      .where("phone", ">=", query)
+      .get()
+  ).pipe(map(usersFromSnapshot));
 
 export const loadMessage = (groupId: string, messageId: string): Observable<Message> =>
   from(doc(`groups/${groupId}/messages/${messageId}`).get()).pipe(map(messageFromSnapshot));

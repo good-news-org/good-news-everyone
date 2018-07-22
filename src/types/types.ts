@@ -19,6 +19,7 @@ export type AppState = {
   messages: MessagesState;
   users: UsersState;
   router: RouterState;
+  search: SearchState;
 };
 
 export type AppEpic = (action$: Observable<AppAction<any>>, state$: Observable<AppState>) => Observable<AppAction<any>>;
@@ -42,6 +43,12 @@ export type RouterState = {
   params: {
     [key: string]: any;
   };
+};
+
+export type SearchState = {
+  query: string;
+  searching: boolean;
+  results: Array<User>;
 };
 
 export type UsersState = {
