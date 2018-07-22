@@ -1,6 +1,6 @@
 import { ofType } from "redux-observable";
 import { of } from "rxjs";
-import { catchError, map, mergeMap } from "rxjs/operators";
+import { catchError, map, mergeMap, withLatestFrom } from "rxjs/operators";
 import { createGroup, loadGroup, addMember } from "../firebase/firebaseService";
 import { AppEpic } from "../types/types";
 import {
@@ -19,11 +19,12 @@ import {
 } from "./groupActions";
 import { routerReplace } from "../router/routerActions";
 
-export const createGroupEpic: AppEpic = action$ =>
+export const createGroupEpic: AppEpic = (action$, state$) =>
   action$.pipe(
     ofType<GroupCreate>(GROUP_CREATE),
-    mergeMap(action =>
-      createGroup(action.payload).pipe(
+    withLatestFrom(state$),
+    mergeMap(([action, state]) =>
+      createGroup(state.auth.user.uid, action.payload).pipe(
         mergeMap(group => of(createGroupSuccess(group), routerReplace(`invite/${group.id}`))),
         catchError(x => console.log(x) || of(createGroupError(x)))
       )

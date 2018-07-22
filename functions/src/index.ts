@@ -41,7 +41,7 @@ type Recipients = {
 };
 
 const getGroupUsersTokens = (groupId): Promise<Recipients> => {
-  return getAllUsers().then(snapshots => {
+  return getGroupUsers(groupId).then(snapshots => {
     console.log(snapshots);
     const tokens: Array<string> = [];
     const userIds: Array<string> = [];
@@ -145,6 +145,12 @@ export const onCreateGroup = functions.firestore.document("groups/{groupId}").on
     });
 });
 
+const getGroup = groupId =>
+  admin
+    .firestore()
+    .doc(`/groups/${groupId}`)
+    .get();
+
 const getGroupPost = (groupId, postId) =>
   admin
     .firestore()
@@ -201,6 +207,7 @@ export const onCreateFirestoreUser = functions.auth.user().onCreate((user, conte
       id: user.uid,
       email: user.email ? user.email : "",
       photoUrl: user.photoURL ? user.photoURL : "",
-      displayName: user.displayName ? user.displayName : ""
+      displayName: user.displayName ? user.displayName : "",
+      phone: user.phone ? user.photo : ""
     });
 });

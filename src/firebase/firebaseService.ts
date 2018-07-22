@@ -1,12 +1,11 @@
 import { ConfirmationResult } from "@firebase/auth-types";
 import * as firebase from "firebase";
-import { EMPTY, from, Observable, Observer, zip } from "rxjs";
+import { EMPTY, from, Observable, Observer } from "rxjs";
 import { map, mergeMap, skip } from "rxjs/operators";
 import { Group, groupFromSnapshot, groupsFromSnapshot } from "../models/group";
 import { Message, messageFromSnapshot, messagesFromSnapshot } from "../models/message";
 import { User, userFromSnapshot, usersFromSnapshot } from "../models/user";
 import { MapObject } from "../types/types";
-import { groupMembersFromSnapshot } from "../models/groupMember";
 
 const config = {
   apiKey: process.env.REACT_APP_apiKey,
@@ -17,6 +16,8 @@ const config = {
   messagingSenderId: process.env.REACT_APP_messagingSenderId
 };
 firebase.initializeApp(config);
+
+firebase.firestore().settings({ timestampsInSnapshots: true });
 
 const messaging = firebase.messaging();
 
@@ -84,52 +85,29 @@ export const updateUserToken = (userId: string, token: string): Observable<any> 
   from(doc(`users/${userId}`).update(`notificationTokens.${token}`, true));
 
 export const loadGroups = (userId: string): Observable<MapObject<Group>> =>
-  from(collection("groups").get()).pipe(map(groupsFromSnapshot));
+  from(
+    collection("groups")
+      .where(`members.${userId}.active`, "==", true)
+      .get()
+  ).pipe(map(groupsFromSnapshot));
 
 export const loadGroup = (groupId: string): Observable<Group> =>
-  zip(
-    from(
-      firebase
-        .firestore()
-        .doc(`groups/${groupId}`)
-        .get()
-    ),
-    from(
-      firebase
-        .firestore()
-        .collection(`groups/${groupId}/users`)
-        .get()
-    )
-  ).pipe(
-    map(([groupSnapshot, membersSnapshot]) => {
-      const group = groupFromSnapshot(groupSnapshot);
-      const groupMembers = groupMembersFromSnapshot(membersSnapshot);
-      return {
-        ...group,
-        members: groupMembers
-      };
-    })
-  );
+  from(doc(`groups/${groupId}`).get()).pipe(map(groupFromSnapshot));
 
-export const createGroup = (name: string): Observable<Group> =>
-  from(collection("groups").add({ name })).pipe(mergeMap(ref => loadGroup(ref.id)));
+export const createGroup = (userId: string, name: string): Observable<Group> =>
+  from(collection("groups").add({ name, members: { [userId]: { userId, active: true } } })).pipe(
+    mergeMap(ref => loadGroup(ref.id))
+  );
 
 export const addMember = (groupId: string, userId: string): Observable<any> =>
-  from(
-    firebase
-      .firestore()
-      .doc(`groups/${groupId}/users/${userId}`)
-      .set({ userId })
-  );
+  from(doc(`groups/${groupId}`).update({ members: { [userId]: { userId, active: true } } }));
 
 export const loadMessages = (groupId: string): Observable<Array<Message>> =>
   from(collection(`groups/${groupId}/messages`).get()).pipe(map(messagesFromSnapshot));
 
 export const searchUser = (query: string): Observable<Array<User>> =>
   from(
-    firebase
-      .firestore()
-      .collection(`users`)
+    collection(`users`)
       .where("phone", ">=", query)
       .get()
   ).pipe(map(usersFromSnapshot));
