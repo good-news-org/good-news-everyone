@@ -6,12 +6,11 @@ import * as React from "react";
 import { Group } from "../../models/group";
 import { Link } from "../../router/Link";
 import { MapObject } from "../../types/types";
+import { getColor } from "../../utils/utils";
 
 type Props = {
   groups: MapObject<Group>;
 };
-
-const getColor = (id: string) => Math.random() * 360;
 
 const renderGroup = (group: Group) => (
   <Link key={group.id} to={`/group/${group.id}`}>

@@ -1,6 +1,6 @@
 import { ofType } from "redux-observable";
 import { EMPTY, Observable } from "rxjs";
-import { map, mergeMap, take } from "rxjs/operators";
+import { map, mergeMap, take, startWith } from "rxjs/operators";
 import { AppEpic } from "../types/types";
 import {
   RouterInit,
@@ -10,8 +10,8 @@ import {
   ROUTER_PUSH,
   ROUTER_REPLACE,
   ROUTER_POP,
-  RouterReplace,
-  RouterPop
+  RouterPop,
+  RouterReplace
 } from "./routerActions";
 
 const getHistoryObserver = (): Observable<string> =>
@@ -23,7 +23,12 @@ export const initRouterEpic: AppEpic = action$ =>
   action$.pipe(
     ofType<RouterInit>(ROUTER_INIT),
     take(1),
-    mergeMap(() => getHistoryObserver().pipe(map((path: string) => routerNavigate(path))))
+    mergeMap(() =>
+      getHistoryObserver().pipe(
+        map((path: string) => routerNavigate(path)),
+        startWith(routerNavigate(document.location.pathname))
+      )
+    )
   );
 
 export const routerPushEpic: AppEpic = action$ =>
