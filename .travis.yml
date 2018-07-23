@@ -1,14 +1,20 @@
 language: node_js
 node_js:
-- "8.0"
+- "8.11.3"
 branches:
   only:
   - master
   - staging
   - development
+cache:
+  directories:
+  - "node_modules"
+  - "functions/node_modules"
 install:
 - npm install
 - npm install -g firebase-tools
+- npm install --prefix ./functions
+
 script:
 - npm run-script build
 - if [ $TRAVIS_BRANCH == "master" ]; then export FIREBASE_DEPLOY_KEY=$FIREBASE_TOKEN; fi
