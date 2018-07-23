@@ -208,6 +208,6 @@ export const onCreateFirestoreUser = functions.auth.user().onCreate((user, conte
       email: user.email ? user.email : "",
       photoUrl: user.photoURL ? user.photoURL : "",
       displayName: user.displayName ? user.displayName : "",
-      phone: user.phone ? user.photo : ""
+      phone: user.phoneNumber ? user.phoneNumber : ""
     });
 });
