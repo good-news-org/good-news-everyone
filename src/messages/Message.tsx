@@ -7,7 +7,7 @@ import "./message.css";
 export const MessageComponent = ({ message }: { message: Message }) => (
   <div className="message">
     <Chip
-      avatar={<UserProvider userId={message.authorId}>{({ user }) => <Avatar src={user.photoUrl} />}</UserProvider>}
+      avatar={<UserProvider userId={message.authorId}>{user => <Avatar src={user.photoUrl} />}</UserProvider>}
       label={message.text}
     />
   </div>

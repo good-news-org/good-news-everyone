@@ -9,7 +9,7 @@ import { initRouterEpic, routerPushEpic, routerReplaceEpic, routerPopEpic } from
 import { userSearchEpic } from "../search/searchEpics";
 import { createGroupEpic, loadGroupEpic, addMemberEpic } from "../group/groupEpics";
 
-export const appEpics = combineEpics<AppAction, AppAction, AppState>(
+export const appEpics = combineEpics<AppAction<any>, AppAction<any>, AppState>(
   authInitEpic,
   loginEpic,
   logoutEpic,

@@ -11,18 +11,18 @@ import { AuthProvider } from "../auth/AuthProvider";
 import { Group } from "../group/Group";
 import { Groups } from "../groups/Groups";
 import { Login } from "../login/Login";
+import { Logout } from "../login/Logout";
+import { Route } from "../router/Route";
 import { Router } from "../router/Router";
 import { AppAction, AppState } from "../types/types";
 import "./App.css";
 import { appEpics } from "./appEpics";
 import { appReducer } from "./appReducer";
-import { Route } from "../router/Route";
 import { GroupCreate } from "../group/create/GroupCreate";
 import { GroupInvite } from "../group/invite/GroupInvite";
 
-import {Logout} from "../login/Logout";
 const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const epicMiddleware = createEpicMiddleware<AppAction, AppAction, AppState>();
+const epicMiddleware = createEpicMiddleware<AppAction<any>, AppAction<any>, AppState>();
 const store = createStore(appReducer, composeEnhancers(applyMiddleware(epicMiddleware)));
 epicMiddleware.run(appEpics);
 
@@ -36,7 +36,7 @@ const Content = () => (
         <Typography variant="title" color="inherit" className="flex-grow">
           Good News, Everyone!
         </Typography>
-          <Logout />
+        <Logout />
       </Toolbar>
     </AppBar>
     <div className="flex grow">
