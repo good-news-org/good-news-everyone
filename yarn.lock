@@ -41,9 +41,9 @@
   version "0.3.4"
   resolved "https://registry.yarnpkg.com/@firebase/auth-types/-/auth-types-0.3.4.tgz#253b1b2d9b520a0b945d4617c8418f0f19a4159f"
 
-"@firebase/auth@0.7.0":
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/@firebase/auth/-/auth-0.7.0.tgz#f6b9da544241160c04df550d335133fa754b4e3d"
+"@firebase/auth@0.7.1":
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/@firebase/auth/-/auth-0.7.1.tgz#4cfaf4cc3d164cfcb10cf01ce46610de3fa0fc11"
   dependencies:
     "@firebase/auth-types" "0.3.4"
 
@@ -61,15 +61,15 @@
     faye-websocket "0.11.1"
     tslib "1.9.0"
 
-"@firebase/firestore-types@0.4.3":
-  version "0.4.3"
-  resolved "https://registry.yarnpkg.com/@firebase/firestore-types/-/firestore-types-0.4.3.tgz#0baa4f68aa8889474f582320af577f1e9a78fab6"
+"@firebase/firestore-types@0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@firebase/firestore-types/-/firestore-types-0.5.0.tgz#dbf3aec64c0dfe2855038decb082059455b41a30"
 
-"@firebase/firestore@0.5.6":
-  version "0.5.6"
-  resolved "https://registry.yarnpkg.com/@firebase/firestore/-/firestore-0.5.6.tgz#2d859b319680ad61c6b72a2d821588949ac8b491"
+"@firebase/firestore@0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@firebase/firestore/-/firestore-0.6.0.tgz#57ca88d1f700296ecbe6e10000513b3cd7512a96"
   dependencies:
-    "@firebase/firestore-types" "0.4.3"
+    "@firebase/firestore-types" "0.5.0"
     "@firebase/logger" "0.1.1"
     "@firebase/webchannel-wrapper" "0.2.8"
     grpc "1.11.3"
@@ -172,9 +172,9 @@
   dependencies:
     recompose "^0.26.0 || ^0.27.0"
 
-"@types/jest@^23.1.4":
-  version "23.1.4"
-  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-23.1.4.tgz#71e1e2d08b1db742f479ee2795536ebc999a2419"
+"@types/jest@^23.3.0":
+  version "23.3.1"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-23.3.1.tgz#a4319aedb071d478e6f407d1c4578ec8156829cf"
 
 "@types/jss@^9.5.3":
   version "9.5.3"
@@ -183,9 +183,13 @@
     csstype "^2.0.0"
     indefinite-observable "^1.0.1"
 
-"@types/node@*", "@types/node@^10.5.1":
+"@types/node@*":
   version "10.5.1"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.5.1.tgz#d578446f4abff5c0b49ade9b4e5274f6badaadfc"
+
+"@types/node@^10.5.2":
+  version "10.5.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.5.4.tgz#6eccc158504357d1da91434d75e86acde94bb10b"
 
 "@types/react-dom@^16.0.6":
   version "16.0.6"
@@ -194,9 +198,9 @@
     "@types/node" "*"
     "@types/react" "*"
 
-"@types/react-redux@^6.0.3":
-  version "6.0.3"
-  resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-6.0.3.tgz#7e8a86cce1c453166056bce9d4eb5cab5a2cfe13"
+"@types/react-redux@^6.0.4":
+  version "6.0.5"
+  resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-6.0.5.tgz#bb44679588554f3b686666c0484a960aa7a47b86"
   dependencies:
     "@types/react" "*"
     redux "^4.0.0"
@@ -213,12 +217,12 @@
   dependencies:
     csstype "^2.2.0"
 
-"@types/redux-form@^7.3.1":
-  version "7.3.1"
-  resolved "https://registry.yarnpkg.com/@types/redux-form/-/redux-form-7.3.1.tgz#024d74aa4a476a038c2374b00dd5f6708466bf29"
+"@types/redux-form@^7.4.2":
+  version "7.4.4"
+  resolved "https://registry.yarnpkg.com/@types/redux-form/-/redux-form-7.4.4.tgz#2cf62b8eb1dc1b1df95b6b25c2763db196e5c190"
   dependencies:
     "@types/react" "*"
-    redux "^3.6.0"
+    redux "^3.6.0 || ^4.0.0"
 
 abab@^1.0.4:
   version "1.0.4"
@@ -2922,14 +2926,14 @@ find-up@^2.0.0, find-up@^2.1.0:
   dependencies:
     locate-path "^2.0.0"
 
-firebase@^5.2.0:
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/firebase/-/firebase-5.2.0.tgz#aae53339ab510f523217fedd92246fe9f05cfd66"
+firebase@^5.3.0:
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/firebase/-/firebase-5.3.0.tgz#cb1823142337646a4537144b25667a9b9c62f3b8"
   dependencies:
     "@firebase/app" "0.3.3"
-    "@firebase/auth" "0.7.0"
+    "@firebase/auth" "0.7.1"
     "@firebase/database" "0.3.4"
-    "@firebase/firestore" "0.5.6"
+    "@firebase/firestore" "0.6.0"
     "@firebase/functions" "0.3.0"
     "@firebase/messaging" "0.3.5"
     "@firebase/polyfill" "0.3.3"
@@ -4580,7 +4584,7 @@ locate-path@^2.0.0:
     p-locate "^2.0.0"
     path-exists "^3.0.0"
 
-lodash-es@^4.17.10, lodash-es@^4.17.5, lodash-es@^4.2.1:
+lodash-es@^4.17.10, lodash-es@^4.17.5:
   version "4.17.10"
   resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.10.tgz#62cd7104cdf5dd87f235a837f0ede0e8e5117e05"
 
@@ -4641,7 +4645,7 @@ lodash.uniq@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
 
-"lodash@>=3.5 <5", lodash@^4.13.1, lodash@^4.15.0, lodash@^4.17.10, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.1, lodash@^4.3.0:
+"lodash@>=3.5 <5", lodash@^4.13.1, lodash@^4.15.0, lodash@^4.17.10, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.3.0:
   version "4.17.10"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
 
@@ -6270,16 +6274,7 @@ redux-observable@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/redux-observable/-/redux-observable-1.0.0.tgz#780ff2455493eedcef806616fe286b454fd15d91"
 
-redux@^3.6.0:
-  version "3.7.2"
-  resolved "https://registry.yarnpkg.com/redux/-/redux-3.7.2.tgz#06b73123215901d25d065be342eb026bc1c8537b"
-  dependencies:
-    lodash "^4.2.1"
-    lodash-es "^4.2.1"
-    loose-envify "^1.1.0"
-    symbol-observable "^1.0.3"
-
-redux@^4.0.0:
+"redux@^3.6.0 || ^4.0.0", redux@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/redux/-/redux-4.0.0.tgz#aa698a92b729315d22b34a0553d7e6533555cc03"
   dependencies:
@@ -7123,7 +7118,7 @@ symbol-observable@1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-1.0.4.tgz#29bf615d4aa7121bdd898b22d4b3f9bc4e2aa03d"
 
-symbol-observable@^1.0.3, symbol-observable@^1.0.4, symbol-observable@^1.1.0, symbol-observable@^1.2.0:
+symbol-observable@^1.0.4, symbol-observable@^1.1.0, symbol-observable@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-1.2.0.tgz#c22688aed4eab3cdc2dfeacbb561660560a00804"
 
@@ -7392,9 +7387,9 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-typescript@^2.9.2:
-  version "2.9.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.9.2.tgz#1cbf61d05d6b96269244eb6a3bce4bd914e0f00c"
+typescript@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.0.1.tgz#43738f29585d3a87575520a4b93ab6026ef11fdb"
 
 ua-parser-js@^0.7.18:
   version "0.7.18"
